@@ -16,7 +16,7 @@ use think\Controller;
 //2-1.构造方法注入 如果你继承了系统的控制器基类think\Controller的话，系统已经自动完成了请求对象的构造方法注入了，你可以直接使用$this->request属性调用当前的请求对象。
 //2-2.操作方法注入 public function index(Request $request)。
 //3.Facade调用 在其它场合（例如模板输出等）或无法使用依赖注入场合，则可以使用think\facade\Request静态类操作（注意use引入的类库区别）。 Request::param('name')
-//4.使用助手函数request或input获取参数变量 request()->param('id') $all = input('param.');;
+//4.使用助手函数request或input获取参数变量 request()->param('id'); $all = input('param.');
 
 class Test
 {
