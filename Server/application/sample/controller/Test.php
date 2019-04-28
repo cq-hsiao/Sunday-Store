@@ -24,7 +24,7 @@ class Test
 
 
 
-//    public function demo(Request $request){
+//    public function hello(Request $request){
 
 
 //        1、函数方法对应参数获取变量 function hello($id,$name...)
