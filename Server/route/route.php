@@ -9,12 +9,23 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-Route::get('think', function () {
-    return 'hello,ThinkPHP5!';
-});
 
-Route::get('hello/:name', 'index/hello');
+//方式一：配置式编写方式
+//return [
+//    '__pattern__' => [
+//        'name' => '\w+',
+//    ],
+//    '[hello]'     => [
+//        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
+//        ':name' => ['index/hello', ['method' => 'post']],
+//    ],
+//
+//];
 
-return [
+//方式二：动态注册，易读性强，灵活
+//Route::rule('路由表达式','路由地址','请求类型')-> 请求参数 https(false) -> 变量规则 pattern(['name' => '\w+']);;
+//Route::rule('hello/:id','sample/Test/hello','GET|POST')->https(false);
+//Route::get('hello/:id','sample/Test/hello');
+// http://xxx.com/hello/2?name=xxx
 
-];
+Route::get('banner/:id','api/v1.Banner/getBanner');
