@@ -20,5 +20,6 @@ class Banner
         }catch (Exception $ex){
             throw $ex;
         }
+        return '';
     }
 }

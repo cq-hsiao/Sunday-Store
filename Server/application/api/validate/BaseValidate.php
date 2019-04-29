@@ -2,6 +2,7 @@
 
 namespace app\api\validate;
 
+use app\lib\exception\ParameterException;
 use think\Exception;
 use think\facade\Request;
 use think\Validate;
@@ -15,10 +16,21 @@ class BaseValidate extends Validate
 
         //获得http传入的参数并做校验
         $params = Request::param();
-        $result = $this->check($params);
+        $result = $this->batch()->check($params);
         if(!$result){
-            $error = $this->error;
-            throw new Exception($error);
+
+//            $e = new ParameterException();
+//            $e->msg =  $this->error;
+//            $e->errorCode =  'XXX';
+//初始化赋值最好用构造方法，而不是创建对象后再更改成员变量
+
+            $exception = new ParameterException(
+                [
+                    // $this->error有一个问题，并不是一定返回数组，需要判断
+                    'msg' => is_array($this->error) ? implode(
+                        ';', $this->error) : $this->error,
+                ]);
+            throw $exception;
         } else {
             return true;
         }
