@@ -28,4 +28,12 @@
 //Route::get('hello/:id','sample/Test/hello');
 // http://xxx.com/hello/2?name=xxx
 
+
+// 设置name变量规则（采用正则定义）
+Route::pattern('name', '\w+');
+// 支持批量添加
+Route::pattern([
+    'name' => '\w+',
+    'id'   => '.*',
+]);
 Route::get('banner/:id','api/v1.Banner/getBanner');
