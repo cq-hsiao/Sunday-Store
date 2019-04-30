@@ -22,9 +22,9 @@ return [
     // 单文件日志写入
     'single'      => false,
     // 独立日志级别
-    'apart_level' => [],
+    'apart_level' => ['error','sql'],
     // 最大日志文件数量
     'max_files'   => 0,
     // 是否关闭日志写入
-    'close'       => true,
+    'close'       => false,
 ];
