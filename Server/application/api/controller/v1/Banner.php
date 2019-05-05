@@ -39,7 +39,7 @@ class Banner
         (new IDMustBePositiveInt())->goCheck();
 
         $banner = BannerModel::getBannerByID($id);
-
+//        $banner->hidden(['delete_time','items.update_time']);
 
 //  模型查询的最佳实践原则是：在模型外部使用静态方法进行查询，内部使用动态方法查询，包括使用数据库的查询构造器。模型的查询始终返回对象实例，但可以和数组一样使用。
 

@@ -23,7 +23,7 @@ class IDMustBePositiveInt extends BaseValidate
      * @var array
      */
     protected $message = [
-        'id' => 'id必须是正整数'
+        'id.isPositiveInteger' => 'id必须是正整数'
     ];
 
 }
