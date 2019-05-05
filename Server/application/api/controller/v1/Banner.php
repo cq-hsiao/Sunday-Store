@@ -40,9 +40,18 @@ class Banner
 
         $banner = BannerModel::getBannerByID($id);
 
+
+//  模型查询的最佳实践原则是：在模型外部使用静态方法进行查询，内部使用动态方法查询，包括使用数据库的查询构造器。模型的查询始终返回对象实例，但可以和数组一样使用。
+
+        //静态调用（推荐）
+//         $banner = BannerModel::with(['items','items.img'])->find($id);
+        //实例化对象调用
+//        $banner = new BannerModel();
+//        $banner = $banner->get();
+
         if(!$banner) {
             throw new BannerMissException();
         }
-        return $banner;
+        return $banner; //框架自动调用toArray
     }
 }
