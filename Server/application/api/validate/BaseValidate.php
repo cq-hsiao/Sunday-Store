@@ -45,4 +45,16 @@ class BaseValidate extends Validate
 //        return $field . '必须是正整数';
         return false;
     }
+
+    protected function isNotEmpty($value, $rule='', $data='', $field='')
+    {
+        $value = trim($value);
+        if (empty($value)) {
+//            return $field . '不允许为空';
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 }

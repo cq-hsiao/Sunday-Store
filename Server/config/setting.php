@@ -10,5 +10,8 @@
 return [
     //图片路径
     'img_prefix' => 'http://wxshop.com/images',
+    //加盐加密
+    'token_salt' => 'woshihsiao95',
+    //缓存过期时间
     'token_expire_in' => 7200
 ];
