@@ -14,7 +14,8 @@ class Theme extends  BaseModel
     /**
      * 关联Image
      * 要注意belongsTo和hasOne的区别
-     * 带外键的为主表 一般定义belongsTo，另外一方定义hasOne
+     * belongsTo 是定义在关联模型从模型中，也是从模型对应的表一般都储存外键id，在关联模型属于从属关系
+     * hasOne   是定义在主模型中，在关联模型中属于主关系，没有储存外键id
      */
     public function topicImg()
     {

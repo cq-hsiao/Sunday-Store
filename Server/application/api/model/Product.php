@@ -25,4 +25,43 @@ class Product extends BaseModel
             ->select();
         return $products;
     }
+
+    public function imgs(){
+        return $this->hasMany('ProductImage','product_id','id');
+    }
+
+    public function properties() {
+        return $this->hasMany('ProductProperty','product_id','id');
+    }
+
+    public static function getProductDetail($id){
+
+//支持使用数组方式定义嵌套预载入
+//        $product = self::with(['properties',
+//            'imgs'=> ['imgUrl']]
+//            )
+//            ->find($id);
+
+//        $product = self::with(['properties','imgs.imgUrl'])
+//            ->find($id);
+
+        /* 闭包函数构建query查询器  */
+        $product = self::with(['properties','imgs' => function($query){
+            $query->with(['imgUrl'])
+                ->order('order','asc');
+        }])
+            ->find($id);
+        return $product;
+
+//  问题：以下写法在5.1版本无效，之前5.0.X版本有效
+//        $product = self::with([
+//            'imgs' => function($query){
+//                $query->with(['imgUrl'])
+//                    ->order('order','asc');
+//            }
+//        ])
+//            ->with(['properties'])
+//            ->find($id);
+
+    }
 }

@@ -68,4 +68,15 @@ class Product
 
         return $data;
     }
+
+    //获得商品详情
+    public function getOne($id='')
+    {
+        (new IDMustBePositiveInt())->goCheck();
+        $product = ProductModel::getProductDetail($id);
+        if(!$product){
+            throw new ProductException();
+        }
+        return $product;
+    }
 }

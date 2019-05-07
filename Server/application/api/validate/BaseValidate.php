@@ -57,4 +57,28 @@ class BaseValidate extends Validate
         }
     }
 
+
+    /**
+     * 通用方法 根据各个验证器的规则中校验数据
+     * @param array $array 通常传入request.post变量数组
+     * @return array 按照规则key过滤后的变量数组
+     * @throws ParameterException
+     */
+    public function getDataByRule($array)
+    {
+        if(array_key_exists('user_id',$array) || array_key_exists('uid',$array)){
+            // 不允许包含user_id或者uid，防止恶意覆盖user_id外键
+            throw new ParameterException([
+                'msg' => '参数中包含有非法的参数名user_id或者uid'
+            ]);
+        }
+
+        $newArray = array();
+        foreach ($this->rule as $k => $v){
+            if(array_key_exists($k,$array)){
+                $newArray[$k] = $array[$k];
+            }
+        }
+        return $newArray;
+    }
 }

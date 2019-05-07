@@ -37,6 +37,13 @@ Route::pattern([
     'id'   => '.*',
 ]);
 
+
+/**
+ * 路由注册
+ * 使用路由分组可以简化定义
+ * 并在一定程度上提高路由匹配的效率
+ */
+
 //Banner
 Route::get('api/:version/banner/:id','api/:version.Banner/getBanner');
 
@@ -45,8 +52,22 @@ Route::get('api/:version/theme','api/:version.Theme/getSimpleList');
 Route::get('api/:version/theme/:id','api/:version.Theme/getOneTheme');
 
 //Product
-Route::get('api/:version/product/recent','api/:version.Product/getRecent');
-Route::get('api/:version/product/by_category', 'api/:version.Product/getAllInCategory');
+
+//Route::get('api/:version/product/:id', 'api/:version.Product/getOne')->pattern(['id' => '\d+']);
+//Route::get('api/:version/product/by_category', 'api/:version.Product/getAllInCategory');
+//Route::get('api/:version/product/recent','api/:version.Product/getRecent');
+
+// 如果要使用分组路由，建议使用闭包的方式，数组的方式不允许有同名的key
+//Route::group('api/:version/theme',[
+//    '' => ['api/:version.Theme/getThemes'],
+//    ':t_id/product/:p_id' => ['api/:version.Theme/addThemeProduct'],
+//    ':t_id/product/:p_id' => ['api/:version.Theme/addThemeProduct']
+//]);
+Route::group('api/:version/product',function (){
+    Route::get('/by_category', 'api/:version.Product/getAllInCategory');
+    Route::get('/:id','api/:version.Product/getOne');
+    Route::get('/recent','api/:version.Product/getRecent');
+})->pattern(['id' => '\d+']);
 
 //Category
 Route::get('api/:version/category/all','api/:version.Category/getAllCategories');
@@ -54,3 +75,7 @@ Route::get('api/:version/category/all','api/:version.Category/getAllCategories')
 
 //Token
 Route::post('api/:version/token/user','api/:version.Token/getToken');
+
+
+//Address
+Route::post('api/:version/address', 'api/:version.Address/createOrUpdateAddress');
