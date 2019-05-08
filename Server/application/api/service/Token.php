@@ -99,5 +99,22 @@ class Token
         }
     }
 
+    /**
+     * 检查操作UID是否合法或匹配
+     * @param $checkedUID
+     * @return bool
+     * @throws Exception
+     */
+    public static function isValidOperate($checkedUID)
+    {
+        if(!$checkedUID){
+            throw new Exception('必须传入一个被检查的UID');
+        }
 
+        $currentUID = self::getCurrentUID();
+        if($checkedUID == $currentUID){
+            return true;
+        }
+        return false;
+    }
 }

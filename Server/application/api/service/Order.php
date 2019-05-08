@@ -18,6 +18,17 @@ use app\lib\exception\UserException;
 use think\Db;
 use think\Exception;
 
+/**
+ * 订单类
+ * 订单做了以下简化：
+ * 创建订单时会检测库存量，但并不会预扣除库存量，因为这需要队列支持
+ * 未支付的订单再次支付时可能会出现库存不足的情况
+ * 所以，项目采用3次检测
+ * 1. 创建订单时检测库存
+ * 2. 支付前检测库存
+ * 3. 支付成功后检测库存
+ */
+
 class Order
 {
     //订单的商品列表，即客户端传递过来的参数
@@ -109,13 +120,12 @@ class Order
             }
             $orderProduct = new OrderProduct();
             $orderProduct->saveAll($this->oProducts);
-
+            Db::commit();
             return [
                 'order_no' => $orderNo,
                 'order_id' => $orderID,
                 'create_time' => $create_time
             ];
-            Db::commit();
         } catch (\Exception $ex){
             Db::rollback();
             throw $ex;
@@ -124,6 +134,14 @@ class Order
 
     }
 
+
+    /**
+     * @param $oProducts
+     * @return array 根据订单信息查找真实商品信息
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public function getProductsByOrder($oProducts){
         //注意避免循环查询数据库
         $IDs = [];
@@ -233,5 +251,28 @@ class Order
                 'd') . substr(time(), -5) . substr(microtime(), 2, 5) . sprintf(
                 '%02d', rand(0, 99));
         return $orderSn;
+    }
+
+    /**
+     * 复用，体现了封装的好处
+     * @param string $orderID 订单号
+     * @return array 订单商品状态
+     * @throws Exception
+     */
+    public function checkOrderStock($orderID){
+       
+        $oProducts =OrderProduct::where('order_id','=',$orderID)
+            ->select();
+        $this->oProducts = $oProducts;
+        if($oProducts->isEmpty()){
+            throw new OrderException([
+                'msg' => '订单对应的商品不存在',
+                'errorCode' => 80001
+            ]);
+        }
+        $this->products = $this->getProductsByOrder($oProducts);
+        $status = $this->getOrderStatus();
+
+        return $status;
     }
 }
