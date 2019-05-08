@@ -9,6 +9,7 @@
 namespace app\api\controller\v1;
 
 
+use app\api\model\BaseModel;
 use app\api\validate\IDMustBePositiveInt;
 use app\api\model\Banner as BannerModel;
 use app\lib\exception\BannerMissException;
@@ -52,6 +53,7 @@ class Banner
         if(!$banner) {
             throw new BannerMissException();
         }
+//        return $banner->items[0]['img'];
         return $banner; //框架自动调用toArray
     }
 }
