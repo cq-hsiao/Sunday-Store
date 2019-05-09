@@ -28,6 +28,10 @@ class Product extends BaseModel
 
     public function imgs(){
         return $this->hasMany('ProductImage','product_id','id');
+        //        1.不使用闭包函数构建query查询器
+        //        $product = self::with(['properties','imgs.imgUrl'])
+        //        ->find($id);
+        //return $this->hasMany('ProductImage', 'product_id', 'id')->order('order', 'asc');
     }
 
     public function properties() {
@@ -45,7 +49,7 @@ class Product extends BaseModel
 //        $product = self::with(['properties','imgs.imgUrl'])
 //            ->find($id);
 
-        /* 闭包函数构建query查询器  */
+        /* 2.闭包函数构建query查询器 */
         $product = self::with(['properties','imgs' => function($query){
             $query->with(['imgUrl'])
                 ->order('order','asc');

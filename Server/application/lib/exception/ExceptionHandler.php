@@ -44,7 +44,9 @@ class ExceptionHandler extends Handle
             // Config::get('app_debug');
             if(config('app_debug')){
                 // 调试状态下需要显示TP默认的异常页面，因为TP的默认页面容易看出问题
-                Log::write($e->getMessage(),'error');
+                if(config('log.close')){
+                    Log::write($e->getMessage(),'error');
+                }
                 return parent::render($e);
             }
 
