@@ -117,4 +117,14 @@ class Token
         }
         return false;
     }
+
+    public static function verifyToken($token)
+    {
+        $isExist = Cache::get($token);
+        if($isExist){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

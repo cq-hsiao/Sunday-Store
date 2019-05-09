@@ -11,6 +11,7 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\api\model\User as UserModel;
+use app\api\model\UserAddress;
 use app\api\service\Token as TokenService;
 use app\api\validate\NewAddress;
 use app\lib\exception\SuccessMessage;
@@ -62,5 +63,26 @@ class Address extends BaseController
         return json(new SuccessMessage([
             'msg' => '操作成功！'
             ]),201);
+    }
+
+
+    /**
+     * 获取用户地址信息
+     * @return array
+     * @throws UserException
+     * @throws \think\exception\DbException
+     */
+    public function getUserAddress()
+    {
+        $uid = TokenService::getCurrentUID();
+        $userAddress = UserAddress::where('user_id','=',$uid)
+            ->find();
+        if(!$userAddress){
+            throw new UserException([
+                'msg' => '用户地址不存在',
+                'errorCode' => 60001
+            ]);
+        }
+        return $userAddress;
     }
 }
