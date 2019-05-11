@@ -1,0 +1,12 @@
+<!--pages/theme/theme.wxml-->
+<import src="../tpls/products/products-tpl.wxml"/>
+<view class="container theme-container" >
+    <view class="theme-header">
+        <image src="{{themeInfo.head_img.url}}" mode="aspectFill" />
+    </view>
+    <view class="theme-main">
+        <!--单品-->
+        <template is="products" data="{{products:themeInfo.products}}"/>
+    </view>
+</view>
+
