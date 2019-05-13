@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    loadingHidden: false,
   },
 
   /**
@@ -39,7 +39,8 @@ Page({
 
     home.getProductData((data) => {
       this.setData({
-        'productsArr': data
+        'productsArr': data,
+        loadingHidden: true
       })
     })
   },

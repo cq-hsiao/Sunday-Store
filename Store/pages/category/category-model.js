@@ -26,7 +26,7 @@ class Category extends Base {
         callback && callback(data)
       }
     };
-    console.log('请求了')
+
     this.request(params)
   }
 }

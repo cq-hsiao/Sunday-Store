@@ -38,6 +38,9 @@
   border-radius: 36rpx;
   text-align: center;
 }
+.fiexd-cart .small{
+  font-size: 20rpx;
+}
 .fiexd-cart.animate{
   animation: aCartScale 200ms cubic-bezier(.17,.67,.83,.67);
   animation-fill-mode: backwards;

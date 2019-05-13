@@ -34,13 +34,13 @@ Page({
           topImgUrl: categoryData[0].img.url,
           title: categoryData[0].name
         }
-        
+
 
         this.setData({
           loadingHidden: true,
           'productInfo[0]': dataObj,
         });
-        
+
         // this.setData({
         //   categoryInfo0: dataObj,
         // });
@@ -73,7 +73,7 @@ Page({
       category.getProductsByCategory(id,(data)=>{
         this.setData(this.getDataObjForBind(index, data))
       })
-    } 
+    }
   },
 
   isLoadedData:function(index){
@@ -110,7 +110,7 @@ Page({
             title: selectType.name
           }
         obj['loadingHidden'] = true
-        console.log(obj)
+
         return obj;
 
   },

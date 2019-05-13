@@ -5,7 +5,8 @@
         <view class="fixed-btns-box" bindtap="onCartTap">
             <view class="fiexd-cart {{isShake?'animate':''}}">
                 <image src="../../imgs/icon/cart@top.png"></image>
-                <view wx:if="{{cartTotalCounts>0}}">{{cartTotalCounts}}</view>
+                <view wx:if="{{cartTotalCounts>0&&cartTotalCounts<100}}">{{cartTotalCounts}}</view>
+                 <view class="small" wx:if="{{cartTotalCounts>100}}">99+</view>
             </view>
         </view>
         <view class="detail-topic-img">
@@ -13,7 +14,8 @@
         </view>
         <view class="cart-box">
             <view class="product-counts">
-                <picker class="{{product.stock==0?'disabled':''}}" bindchange="bindPickerChange" value="{{index}}" range="{{countsArray}}">
+                <!-- <picker class="{{product.stock==0?'disabled':''}}" bindchange="bindPickerChange" value="{{index}}" range="{{countsArray}}"> -->
+                <picker bindchange="bindPickerChange" value="{{index}}" range="{{countsArray}}">
                     <!--因为picker对flex支持不好，所以加了一层view-->
                     <view>
                         <text class="counts-tips">数量</text>
@@ -23,7 +25,8 @@
                 </picker>
             </view>
             <view class="middle-border"></view>
-            <view class="add-cart-btn {{product.stock==0?'disabled':''}}" bindtap="onAddingToCartTap">
+            <!-- <view class="add-cart-btn {{product.stock==0?'disabled':''}}" bindtap="onAddingToCartTap"> -->
+            <view class="add-cart-btn" bindtap="onAddingToCartTap">
                 <text>加入购物车</text>
                 <image class="cart-icon" src="../../imgs/icon/cart.png"></image>
                 <image id="small-top-img" class="small-top-img {{isFly?'animate':''}}"
@@ -66,5 +69,7 @@
             </view>
         </view>
     </view>
-
+ <loading hidden="{{loadingHidden}}">
+        加载中...
+    </loading>
 </view>

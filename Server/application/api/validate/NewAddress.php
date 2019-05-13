@@ -17,7 +17,7 @@ class NewAddress extends BaseValidate
     // 所有数据库和user关联的外键统一使用user_id，而不要使用uid
     protected $rule = [
         'name' => 'require|isNotEmpty',
-        'mobile' => 'require|mobile',
+        'mobile' => 'require|isMobile',
         'province' => 'require|isNotEmpty',
         'city' => 'require|isNotEmpty',
         'country' => 'require|isNotEmpty',

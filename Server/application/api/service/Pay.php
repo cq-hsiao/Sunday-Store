@@ -9,13 +9,12 @@
 namespace app\api\service;
 
 
+use app\api\model\Order as OrderModel;
 use app\lib\enum\OrderStatusEnum;
 use app\lib\exception\OrderException;
 use app\lib\exception\TokenException;
 use think\Exception;
-use app\api\model\Order as OrderModel;
 use think\facade\Log;
-use think\route\dispatch\Callback;
 
 
 // extend/WxPay/WxPay.Api.php 导入所需的类库
@@ -128,6 +127,12 @@ class Pay
 //            throw new Exception('获取预支付订单失败');
         }
 
+        if(empty($wxOrder['prepay_id'])){
+            throw new OrderException([
+                'msg' => '没有返回prepay_id，支付失败',
+                'errorCode' => 80005,
+            ]);
+        }
         //保存prepay_id
         $this->recordPreOrder($wxOrder);
         //生成签名
