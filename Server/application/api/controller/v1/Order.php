@@ -17,6 +17,7 @@ use app\api\validate\OrderPrepare;
 use app\api\validate\PagingParameter;
 use app\api\model\Order as OrderModel;
 use app\lib\exception\OrderException;
+use app\lib\exception\SuccessMessage;
 
 class Order extends BaseController
 {
@@ -73,6 +74,32 @@ class Order extends BaseController
     }
 
     /**
+     * CMS 获取全部订单简要信息（分页）
+     * @param int $page
+     * @param int $size
+     * @return array
+     * @throws \app\lib\exception\ParameterException
+     */
+    public function getSummary($page=1, $size = 20){
+        (new PagingParameter())->goCheck();
+//        $uid = Token::getCurrentUid();
+        $pagingOrders = OrderModel::getSummaryByPage($page, $size);
+        if ($pagingOrders->isEmpty())
+        {
+            return [
+                'current_page' => $pagingOrders->currentPage(),
+                'data' => []
+            ];
+        }
+        $data = $pagingOrders->hidden(['snap_items', 'snap_address'])
+            ->toArray();
+        return [
+            'current_page' => $pagingOrders->currentPage(),
+            'data' => $data
+        ];
+    }
+
+    /**
      * 获取订单详情
      * @param $id
      * @return static
@@ -90,5 +117,15 @@ class Order extends BaseController
         }
         return $orderDetail
             ->hidden(['prepay_id']);
+    }
+
+    //发货
+    public function delivery($id){
+        (new IDMustBePositiveInt())->goCheck();
+        $order = new OrderService();
+        $success = $order->delivery($id);
+        if($success){
+            return new SuccessMessage();
+        }
     }
 }

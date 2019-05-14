@@ -28,9 +28,10 @@
 //Route::get('hello/:id','sample/Test/hello');
 // http://xxx.com/hello/2?name=xxx
 
+use think\facade\Route;
 
 // 设置name变量规则（采用正则定义）
-Route::pattern('name', '\w+');
+//Route::pattern('name', '\w+');
 // 支持批量添加
 Route::pattern([
     'name' => '\w+',
@@ -76,6 +77,8 @@ Route::get('api/:version/category/all','api/:version.Category/getAllCategories')
 //Token
 Route::post('api/:version/token/user','api/:version.Token/getToken');
 Route::post('api/:version/token/verify', 'api/:version.Token/verifyToken');
+// --cms--
+Route::post('api/:version/token/app', 'api/:version.Token/getAppToken')->allowCrossDomain(true);
 
 //Address
 Route::post('api/:version/address', 'api/:version.Address/createOrUpdateAddress');
@@ -85,6 +88,10 @@ Route::get('api/:version/address', 'api/:version.Address/getUserAddress');
 Route::post('api/:version/order','api/:version.Order/prepareOrder');
 Route::get('api/:version/order/by_user','api/:version.Order/getSummaryByUser');
 Route::get('api/:version/order/:id','api/:version.Order/getDetail',[],['id'=>'\d+']);
+// --cms--
+Route::get('api/:version/order/paginate', 'api/:version.Order/getSummary');
+Route::put('api/:version/order/delivery', 'api/:version.Order/delivery');
+
 
 //Pay
 Route::post('api/:version/pay/pre_order','api/:version.Pay/getPreOrder');

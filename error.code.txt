@@ -30,3 +30,7 @@
 80001 订单中的商品不存在，可能已被删除
 80002 订单还未支付，却尝试发货
 80003 订单已支付过
+
+
+php think optimize:schema 生成数据库字段的缓存信息
+php think optimize:route 生成路由缓存
