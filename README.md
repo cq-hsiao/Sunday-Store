@@ -14,18 +14,29 @@
 
 
 
+
+
 # 全栈项目架构，多终端通用API：
 ![](https://coding.imooc.com/static/module/class/content/img/97/section3-1.png)
+
+
 
 
 # 小程序的架构体系：
 ![](http://upload-images.jianshu.io/upload_images/7689038-0639fb41282825fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600)
 
+
+
 # 小程序数据从服务器到前端交互总结：
 ![](http://upload-images.jianshu.io/upload_images/7689038-df002d6a6923605a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600)
 
+
+
 # 数据库设计：
   参考store.sql文件
+
+
+
 
 # 核心知识体系
 ## 1.thinkphp5.1相关的知识
